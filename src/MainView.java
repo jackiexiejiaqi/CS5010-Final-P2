@@ -16,27 +16,27 @@ public class MainView extends JFrame {
 
         JPanel formPanel = new JPanel(new GridLayout(0, 2, 5, 5));
 
-        formPanel.add(new JLabel("First Name:"));
+        formPanel.add(new JLabel("  First Name:"));
         firstNameField = new JTextField(20);
         formPanel.add(firstNameField);
 
-        formPanel.add(new JLabel("Last Name:"));
+        formPanel.add(new JLabel("  Last Name:"));
         lastNameField = new JTextField(20);
         formPanel.add(lastNameField);
 
-        formPanel.add(new JLabel("DOB (YYYY-MM-DD):"));
+        formPanel.add(new JLabel("  DOB (YYYY-MM-DD):"));
         dobField = new JTextField(20);
         formPanel.add(dobField);
 
-        formPanel.add(new JLabel("Preferred Position:"));
+        formPanel.add(new JLabel("  Preferred Position:"));
         preferredPositionComboBox = new JComboBox<>(Position.values());
         formPanel.add(preferredPositionComboBox);
 
-        formPanel.add(new JLabel("Current Position:"));
+        formPanel.add(new JLabel("  Current Position:"));
         currentPositionComboBox = new JComboBox<>(Position.values());
         formPanel.add(currentPositionComboBox);
 
-        formPanel.add(new JLabel("Skill Level (1-5):"));
+        formPanel.add(new JLabel("  Skill Level (1-5):"));
         skillLevelField = new JTextField(20);
         formPanel.add(skillLevelField);
 
