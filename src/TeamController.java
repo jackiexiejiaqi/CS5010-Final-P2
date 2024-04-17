@@ -210,7 +210,7 @@ public class TeamController {
         }
     }
 
-    public boolean contain(Player player, @org.jetbrains.annotations.NotNull ArrayList<Player> lst){
+    public boolean contain(Player player, ArrayList<Player> lst){
         for (Player player1: lst){
             if (player.getJerseyNumber() == player1.getJerseyNumber() &&
                     player.getSkillLevel() == player1.getSkillLevel() &&

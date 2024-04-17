@@ -256,7 +256,7 @@ public class MainWindow extends JFrame {
     U10Panel.add(U10Title, BorderLayout.NORTH);
     U10WelcomeTextArea = new JTextArea();
     U10WelcomeTextArea.setEditable(false);
-    Font U10WelcomeTextAreaFont = this.$$$getFont$$$("Courier New", Font.BOLD | Font.ITALIC, 16, U10WelcomeTextArea.getFont());
+    Font U10WelcomeTextAreaFont = this.$$$getFont$$$("Consolas", Font.BOLD, -1, U10WelcomeTextArea.getFont());
     if (U10WelcomeTextAreaFont != null) U10WelcomeTextArea.setFont(U10WelcomeTextAreaFont);
     U10WelcomeTextArea.setLineWrap(true);
     U10WelcomeTextArea.setText("Welcome to U10 Team Management APP. \n\nPlease select the team you want to manage from the right dropbox;\n\nOr, create your first new team by clicking the right button.");
@@ -410,8 +410,7 @@ public class MainWindow extends JFrame {
     AddSinglePanel.add(DOBLabel, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     PreferredPositionLabel = new JLabel();
     Font PreferredPositionLabelFont = this.$$$getFont$$$("Courier New", Font.BOLD, 16, PreferredPositionLabel.getFont());
-    if (PreferredPositionLabelFont != null)
-      PreferredPositionLabel.setFont(PreferredPositionLabelFont);
+    if (PreferredPositionLabelFont != null) PreferredPositionLabel.setFont(PreferredPositionLabelFont);
     PreferredPositionLabel.setText("Preferred Position: ");
     AddSinglePanel.add(PreferredPositionLabel, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     SkillLevelLabel = new JLabel();
@@ -446,8 +445,7 @@ public class MainWindow extends JFrame {
     AddPlayerCurrentTextArea = new JTextArea();
     AddPlayerCurrentTextArea.setEditable(false);
     Font AddPlayerCurrentTextAreaFont = this.$$$getFont$$$("Courier New", Font.BOLD | Font.ITALIC, 16, AddPlayerCurrentTextArea.getFont());
-    if (AddPlayerCurrentTextAreaFont != null)
-      AddPlayerCurrentTextArea.setFont(AddPlayerCurrentTextAreaFont);
+    if (AddPlayerCurrentTextAreaFont != null) AddPlayerCurrentTextArea.setFont(AddPlayerCurrentTextAreaFont);
     AddPlayerCurrentTextArea.setText("No players prepared to be added.");
     AddPlayerCurrentScroll.setViewportView(AddPlayerCurrentTextArea);
     AddToTeamButton = new JButton();

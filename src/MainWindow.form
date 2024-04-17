@@ -30,7 +30,7 @@
             <constraints border-constraint="Center"/>
             <properties>
               <editable value="false"/>
-              <font name="Courier New" size="16" style="3"/>
+              <font/>
               <lineWrap value="true"/>
               <text value="Welcome to U10 Team Management APP. &#10;&#10;Please select the team you want to manage from the right dropbox;&#10;&#10;Or, create your first new team by clicking the right button."/>
             </properties>
