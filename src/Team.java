@@ -149,24 +149,6 @@ public class Team implements teamInterface{
     }
   }
 
-  public Player findPlayerLineup(int JNum){
-    for (Player player : this.onGround) {
-      if (player.getJerseyNumber() == JNum) {
-        return player;
-      }
-    }
-    return null;
-  }
-
-  public Player findPlayerOnBench(int JNum){
-    for (Player player : this.onBench) {
-      if (player.getJerseyNumber() == JNum) {
-        return player;
-      }
-    }
-    return null;
-  }
-
   /**
    * Selects the lineup of players based on preferred positions.
    *

@@ -47,8 +47,11 @@ public class Player {
    */
   public Player(String firstName, String lastName, LocalDate birthDate,
                 Position preferredPosition, Position assignedPosition, int skillLevel) throws IllegalArgumentException{
-    if(lastName == null || firstName == null || birthDate == null || preferredPosition == null) {
+    if(lastName == null || firstName == null || lastName.isEmpty() || firstName.isEmpty() || birthDate == null || preferredPosition == null) {
       throw new IllegalArgumentException("No field can be null.");
+    }
+    if(preferredPosition.equals(Position.NotAssigned)){
+      throw new IllegalArgumentException("You got to do something.");
     }
     if(skillLevel < 1 || skillLevel > 5) {
       throw new IllegalArgumentException("Skill level must be between 1 and 5.");
@@ -176,13 +179,4 @@ public class Player {
     return playerString.toString();
   }
 
-  /*
-  /**
-   * toString method for the Player class with position
-   * @return first name, last name, jersey number, current position
-
-  public String lineUpToString(){
-    return this.firstName + " " + this.lastName + " " + this.jerseyNumber + " " + this.currentPosition;
-  }
-  */
 }

@@ -39,10 +39,12 @@ public class TeamController {
     }
 
     private void addPlayer() {
+        System.out.println("Enter from team " + this.view.getU10TeamsComboBox().getSelectedItem()+ " Management by clicking AddPlayer");
         this.view.getMainPanel().removeAll();
         this.view.getMainPanel().add(this.view.getAddPlayerPanel());
         this.view.getMainPanel().repaint();
         this.view.getMainPanel().revalidate();
+        this.view.getAddPlayerLabel().setText("U10 Team " + this.view.getU10TeamsComboBox().getSelectedItem() + " Management");
     }
 
     private void removePlayer() {
@@ -95,6 +97,7 @@ public class TeamController {
                     (DefaultListModel<Player>) this.view.getTeamTotalList().getModel();
             if (this.view.getU10TeamsComboBox().getItemCount() > 0) {
                 int curID = (int) this.view.getU10TeamsComboBox().getSelectedItem();
+                System.out.println("Try to find existed team with ID: " + curID);
                 for (Team team : TeamList) {
                     if (team.getTeamID() == curID) {
                         System.out.println("find existed team " + curID);
@@ -113,6 +116,7 @@ public class TeamController {
                         this.view.getTeamManagementLabel().setText("U10 Team " + curID + " " +
                                 "Management");
                         System.out.println("Enter through AddPlayer for existed team");
+                        model1.clear();
 
                         this.view.getRemovePlayerButton().setEnabled(team.getPlayersInArray().length > 11);
                         this.view.getAddPlayerButton().setEnabled(team.getPlayersInArray().length < 20);
@@ -120,12 +124,13 @@ public class TeamController {
                         for (Player player : team.getPlayers()) { // fill TeamTotalList
                             model1.addElement(player);
                         }
+                        return;
                     }
                 }
 
             }
             if (this.view.getU10TeamsComboBox().getItemCount() == 0 ||
-                    !findTeam((int) this.view.getU10TeamsComboBox().getSelectedItem())) {
+                    !findTeam(this.ID)) {
 
                 System.out.println("First team or New team");
                 try {
@@ -136,8 +141,6 @@ public class TeamController {
                     if (!TeamList.contains(tempTeam)) { // if the team does not exist
                         TeamList.add(tempTeam);
 
-
-                        this.view.getU10TeamsComboBox().addItem(ID);
                         //System.out.println(tempTeam.teamToString());
                         JOptionPane.showMessageDialog(this.view.getAddPlayerPanel(), "Creation success!", "Success ",
                                 JOptionPane.INFORMATION_MESSAGE);
@@ -145,11 +148,14 @@ public class TeamController {
                         this.view.getMainPanel().add(this.view.getTeamManagementPanel());
                         this.view.getMainPanel().repaint();
                         this.view.getMainPanel().revalidate();
-                        this.view.getTeamManagementLabel().setText("U10 Team " + ID + " Management");
-                        this.view.getU10TeamsComboBox().setSelectedItem(ID);
+                        this.view.getTeamManagementLabel().setText("U10 Team " + ID + " " +
+                                "Management");
+                        model1.clear();
                         int curID = (int) this.view.getU10TeamsComboBox().getSelectedItem();
                         System.out.println("new Current ID: " + curID);
                         System.out.println("Enter through create a new team, team " + curID);
+                        this.ID+=1;
+                        System.out.println("Next ID: " + this.ID);
 
                         for (Team team : TeamList) {
                             if (team.getTeamID() == curID) {
@@ -183,7 +189,7 @@ public class TeamController {
                     , LocalDate.parse(this.view.getDOBTextField().getText(), DateTimeFormatter.ofPattern("yyyy" +
                     "-MM-dd")), (Position) this.view.getPFComboBox().getSelectedItem(), Position.NotAssigned,
                     (Integer) this.view.getSKComboBox().getSelectedItem());
-            if (!PlayerList.contains(tempPlayer)) {
+            if (!contain(tempPlayer, PlayerList)) {
                 PlayerList.add(tempPlayer);
             } else {
                 throw new IllegalArgumentException("Player already existed.");
@@ -202,6 +208,21 @@ public class TeamController {
         } catch (IllegalArgumentException iae) {
             JOptionPane.showMessageDialog(this.view.getAddPlayerPanel(), iae.getMessage(), "Error ", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public boolean contain(Player player, @org.jetbrains.annotations.NotNull ArrayList<Player> lst){
+        for (Player player1: lst){
+            if (player.getJerseyNumber() == player1.getJerseyNumber() &&
+                    player.getSkillLevel() == player1.getSkillLevel() &&
+                    player.getFirstName().equals(player1.getFirstName()) &&
+                    player.getLastName().equals(player1.getLastName()) &&
+                    player.getPreferredPosition().equals(player1.getPreferredPosition()) &&
+                    player.getBirthDate().equals(player1.getBirthDate()) &&
+                    player.getCurrentPosition().equals(player1.getCurrentPosition())){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void replacePlayer() {
@@ -318,10 +339,11 @@ public class TeamController {
         this.view.getMainPanel().add(this.view.getAddPlayerPanel());
         this.view.getMainPanel().repaint();
         this.view.getMainPanel().revalidate();
-        if (ID != 1){this.ID += 1;}
         this.view.getAddPlayerLabel().setText("U10 Team " + ID + " Add Player"); // set title for
-        // managing
-        // player
+        // managing player
+        System.out.println("Add item to combobox after click Create in main window");
+        this.view.getU10TeamsComboBox().addItem(ID);
+        this.view.getU10TeamsComboBox().setSelectedItem(ID);
   }
 
     ListSelectionListener listener = e -> {  // ReplacePlayerButtonEnable listener start
