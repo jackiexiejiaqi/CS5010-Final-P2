@@ -19,16 +19,19 @@ public class TeamTest {
     @Before
     public void setUp() {
         // Initialize the team with the minimum number of players required plus one.
-        Player[] players = new Player[12];
-        for (int i = 0; i < players.length; i++) {
-            players[i] = new Player("First" + i, "Last" + i, LocalDate.of(2000 - i, 1, 1), Position.Forward, Position.Forward, 3);
+        ArrayList<Player> players = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            players.add(new Player("First" + i, "Last" + i, LocalDate.of(2024 - i, 1, 1),
+                    Position.Forward, Position.Forward, 3)) ;
         }
-        this.team = new Team(players);
+        this.team = new Team(1, players);
 
         // Initialize some extra players for testing addition and removal
-        player1 = players[0]; // Use one of the initialized players for removal test
-        player2 = new Player("Jim", "Beam", LocalDate.of(1992, 3, 1), Position.Midfielders, Position.Midfielders, 5);
-        player3 = new Player("Jill", "Valentine", LocalDate.of(1993, 4, 1), Position.Forward, Position.Forward, 2);
+        player1 = players.get(0); // Use one of the initialized players for removal test
+        player2 = new Player("Jim", "Beam", LocalDate.of(2018, 3, 1), Position.Midfielders,
+                Position.Midfielders, 5);
+        player3 = new Player("Jill", "Valentine", LocalDate.of(2016, 4, 1), Position.Forward,
+                Position.Forward, 2);
     }
 
     /**

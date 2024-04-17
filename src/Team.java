@@ -30,6 +30,7 @@ import java.util.Comparator;
 public class Team implements teamInterface{
   private int size;
 
+  private int teamID;
   private static final int MAX_TEAM_SIZE = 20;
   private static final int MIN_SKILL_LEVEL = 1;
   private static final int MAX_SKILL_LEVEL = 5;
@@ -44,29 +45,33 @@ public class Team implements teamInterface{
    * @param players The array of Player objects representing the players in the team.
    * @throws IllegalArgumentException if the players array is null.
    */
-  public Team(Player[] players){
+  public Team(int ID, ArrayList<Player> players){
     if (players == null) {
       throw new IllegalArgumentException("The players array is null.");
     }
-    this.size = players.length;
-    this.players = new ArrayList<>(Arrays.asList(players));
+    if (players.size() < 11){
+      throw new IllegalArgumentException("The minimum number of players to form a team is 11.");
+    }
+    this.teamID = ID;
+    this.size = players.size();
+    this.players = new ArrayList<>(players);
     this.onGround = new ArrayList<>();
     this.onBench = new ArrayList<>();
     this.jerseyNums = new int[20];
     ArrayList<Integer> randJNum = new ArrayList<>();
     Random random = new Random();
     int jNum;
-    while (randJNum.size() != players.length){
+    while (randJNum.size() != players.size()){
       jNum = random.nextInt(20);
-      if (!randJNum.contains(jNum)){randJNum.add(jNum);}
+      if (!randJNum.contains(jNum) && jNum != 0){randJNum.add(jNum);}
     }
-    for (int i = 0; i < players.length; i++) {
+    for (int i = 0; i < players.size(); i++) {
       this.players.get(i).setJerseyNumber(randJNum.get(i));
       this.jerseyNums[i] = randJNum.get(i);
     }
   }
 
-
+  public int getTeamID(){return this.teamID;}
 
   /**
    * Adds a player to the team.
@@ -77,11 +82,15 @@ public class Team implements teamInterface{
    */
   @Override
   public void addPlayer(Player player) {
-    if (isValidPlayer(player)) {
-      this.players.add(player);
-      this.size++;
+    if (!this.players.contains(player)) { // if the player is not in the players list
+      if (isValidPlayer(player)) {
+        this.players.add(player);
+        this.size++;
+      } else {
+        throw new IllegalArgumentException("Team cannot have more than " + MAX_TEAM_SIZE + " members or invalid player parameter");
+      }
     } else {
-      throw new IllegalArgumentException("Team cannot have more than " + MAX_TEAM_SIZE + " members or invalid player parameter");
+      throw new IllegalArgumentException("Cannot add repeated player.");
     }
   }
 
@@ -127,7 +136,8 @@ public class Team implements teamInterface{
     if (this.onGround != null && playerOnBench.getSkillLevel() >= 1 && playerOnBench.getSkillLevel() <= 5 &&
             playerOnGround.getSkillLevel() >= 1 && playerOnGround.getSkillLevel() <= 5){
       if (this.onBench.contains(playerOnBench) && this.onGround.contains(playerOnGround)) {
-        // remove the player only the onGround contains player and the player has a valid skill level
+        // remove the player only the onGround contains player,
+        // and the player has a valid skill level
         this.onGround.set(this.onGround.indexOf(playerOnGround),
                 this.onBench.get(this.onBench.indexOf(playerOnBench)));
         this.onBench.set(this.onBench.indexOf(playerOnBench), playerOnGround);
@@ -137,6 +147,24 @@ public class Team implements teamInterface{
     } else {
       throw new IllegalArgumentException("The value of the players to be replaced is invalid");
     }
+  }
+
+  public Player findPlayerLineup(int JNum){
+    for (Player player : this.onGround) {
+      if (player.getJerseyNumber() == JNum) {
+        return player;
+      }
+    }
+    return null;
+  }
+
+  public Player findPlayerOnBench(int JNum){
+    for (Player player : this.onBench) {
+      if (player.getJerseyNumber() == JNum) {
+        return player;
+      }
+    }
+    return null;
   }
 
   /**
@@ -149,7 +177,7 @@ public class Team implements teamInterface{
   @Override
   public ArrayList<Player> selectLineUp(ArrayList<Player> playerArrayList) {
     ArrayList<Player> lineup = new ArrayList<>();
-    if (playerArrayList != null){ // if user pass a lineup, then follow user's instruction
+    if (playerArrayList != null){ // if the user passes a lineup, then follow the user's instruction
       this.onGround.addAll(playerArrayList);
       for (Player player: this.players){
         if (!this.onGround.contains(player)){
@@ -272,45 +300,24 @@ public class Team implements teamInterface{
     return new ArrayList<>(players); // Return a copy to protect the internal list.
   }
 
-  public void finalizeTeam() {
-    // Example logic to finalize the team setup
-    if (players.size() >= requiredNumberOfPlayers) {
-      // Assume some sorting or setup
-      Collections.sort(players, Comparator.comparing(Player::getSkillLevel).reversed());
-      // Just an example of setting up a starting lineup based on sorted players
-      onGround.clear();
-      onBench.clear();
-      for (int i = 0; i < players.size(); i++) {
-        if (i < 11) { // Example: Top 11 players make it to the ground
-          onGround.add(players.get(i));
-        } else {
-          onBench.add(players.get(i));
-        }
-      }
-    }
+  public Player[] getPlayersInArray(){
+    return this.players.toArray(new Player[0]);
   }
 
-  /**
-   * Gets the full list of players on the team.
-   * @return A formatted string of all players.
-   */
-  public String getAllPlayers() {
-    StringBuilder builder = new StringBuilder("All Players:\n");
-    for (Player player : players) {
-      builder.append(player).append("\n");  // Ensure Player class has a suitable toString() method
-    }
-    return builder.toString();
+  public Player[] getLineupInArray(){
+    return this.onGround.toArray(new Player[0]);
   }
 
-  /**
-   * Gets the list of players in the starting lineup.
-   * @return A formatted string of the starting lineup.
-   */
-  public String getStartingLineup() {
-    StringBuilder builder = new StringBuilder("Starting Lineup:\n");
-    for (Player player : onGround) {
-      builder.append(player).append("\n");  // Ensure Player class has a suitable toString() method
-    }
-    return builder.toString();
+  public ArrayList<Player> getLineup(){
+    return this.onGround;
   }
+
+  public ArrayList<Player> getOnBench(){
+    return this.onBench;
+  }
+
+  public Player[] getOnBenchInArray(){
+    return this.onBench.toArray(new Player[0]);
+  }
+
 }
