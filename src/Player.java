@@ -169,13 +169,14 @@ public class Player {
    * @return first name, last name, jersey number
    */
   public String toString() {
+    System.out.println("Player toString is called.");
     StringBuilder playerString = new StringBuilder();
-    playerString.append("First name: ").append(this.firstName).append("\t");
-    playerString.append("Last name: ").append(this.lastName).append("\t");
-    playerString.append("Jersey Number: ").append(this.jerseyNumber).append("\t");
-    playerString.append("Skill Level: ").append(this.skillLevel).append("\t");
-    playerString.append("Preferred Position: ").append(this.preferredPosition).append("\t");
-    playerString.append("Current Position: ").append(this.currentPosition).append("\t");
+    playerString.append("First name: ").append(this.firstName).append("  ");
+    playerString.append("Last name: ").append(this.lastName).append("  ");
+    playerString.append("Jersey Number: ").append(this.jerseyNumber).append("  ");
+    playerString.append("Skill Level: ").append(this.skillLevel).append("  ");
+    playerString.append("Preferred Position: ").append(this.preferredPosition).append("  ");
+    playerString.append("Current Position: ").append(this.currentPosition).append("  ");
     return playerString.toString();
   }
 

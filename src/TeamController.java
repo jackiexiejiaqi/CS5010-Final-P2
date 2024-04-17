@@ -270,6 +270,9 @@ public class TeamController {
                 (DefaultListModel<Player>) this.view.getOnBenchList().getModel();
         Player[] lineupTemp = new Player[0], onBenchTemp = new Player[0];
 
+        model2.clear();
+        model3.clear();
+
         for (Team team : TeamList) {  // setup lineup/ onBench start
             if (team.getTeamID() == curID) {  // setup lineup and get lineup, onBench
                 team.selectLineUp(null);
